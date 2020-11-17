@@ -1,0 +1,8 @@
+name=OZ Meds Core Bundle
+poster=poster.png
+description=Core bundle
+id=CoreBundle
+url=https://github.com/Nyamops/oz-meds-core-bundle
+modversion=1.0.0
+pzversion=41
+tags=core
