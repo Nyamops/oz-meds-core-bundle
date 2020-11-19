@@ -25,7 +25,7 @@ This component implements a simple service container that allows you to standard
 
 Register a new service:
 ```lua
-local Container = OZMeOzMedsCoreBundle.OZCore:getContainer()
+local Container = OzMedsCoreBundle.ZCore:getContainer()
 local EventManager = OzMedsCoreBundle.Service.EventManager.EventManager
 local Logger = OzMedsCoreBundle.Service.Logger.Logger
 
@@ -62,7 +62,7 @@ ISHealthPanelEvent = {}
 
 ---@return ISHealthPanelEvent
 function OzMedsCoreBundle.Service.Event.ISHealthPanelEvent:new()
-    local Container = OZMeOzMedsCoreBundle.OZCore:getContainer()
+    local Container = OzMedsCoreBundle.ZCore:getContainer()
 
     ---@class ISHealthPanelEvent
     local public = {}
@@ -87,8 +87,8 @@ end
 --instantiate after all files are initialized
 Events.OnGameBoot.Add(
     function()
-        local Container = OZMeOzMedsCoreBundle.OZCore:getContainer()
-        local ISHealthPanelEvent = OzMedsCoreBundle.Service.Event.ISHealthPanelEvent:new()
+        local Container = OzMedsCoreBundle.ZCore:getContainer()
+        local ISHealthPanelEvent = OzMedsCoreBundle.Service.Event.ISHealthPanelEvent
         Container:register(ISHealthPanelEvent, 'OzMedsCoreBundle.Service.Event.ISHealthPanelEvent', {})
     end
 )
@@ -101,17 +101,22 @@ The most common way to listen to an event is to register an event listener:
 --instantiate after a new game is started, or loading of a save is finished
 Events.OnGameStart.Add(
     function()
+        local Container = OzMedsCoreBundle.ZCore:getContainer()
+
         local eventListener = OzMedsCoreBundle.Service.EventListener.EventListener:new(
             function(data)
                 local o = {}
                 function o:doDrawItem(y, item, alt)
-                    --...
+                    print('TESTTESTTEST======================')
                 end
                 --unpack table to methods arguments
                 return o.doDrawItem(unpack(data))
             end
         )
-        ISHealthPanelEvent.eventManager:subscribe(
+        var_dump(Container, eventListener)
+        var_dump(Container:get('OzMedsCoreBundle.Service.Logger.Logger'), Container:get('OzMedsCoreBundle.Service.EventManager.EventManager'))
+
+        Container:get('OzMedsCoreBundle.Service.EventManager.EventManager'):subscribe(
             'ISHealthPanel.doDrawItem', --your event alias
             eventListener -- listener object with callback function
         )

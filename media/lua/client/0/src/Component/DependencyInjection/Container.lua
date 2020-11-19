@@ -53,7 +53,7 @@ function Container:new()
     ---@param tag string
     ---@return table<string, Service>
     function public:getByTag(tag)
-        if private.services[tag] == nil then
+        if private.taggedServices[tag] == nil then
             return {}
         end
 

@@ -40,8 +40,8 @@ end
 ---@return string
 function uniqid()
     local timestamp = os.time();
-    local random = math.random();
-    local random2 = math.random(10000000, 99999999);
+    local random = ZombRand(10000000);
+    local random2 = ZombRand(10000000, 99999999);
     local microtime = timestamp + random;
     local md5 = string.format("%8x%06x", math.floor(microtime), (microtime - math.floor(microtime)) * 1000000);
     md5 = md5 .. "." .. random2;

@@ -19,7 +19,13 @@ function ZBootstrap:new()
     private.container = OzMedsCoreBundle.ZCore:getContainer()
 
     private.container:register(Logger, 'OzMedsCoreBundle.Service.Logger.Logger', {})
-    private.container:register(EventManager, 'OzMedsCoreBundle.Service.EventManager.EventManager', { private.container:get(getmetatable(Logger)) })
+    private.container:register(
+        EventManager,
+        'OzMedsCoreBundle.Service.EventManager.EventManager',
+        {
+            private.container:get('OzMedsCoreBundle.Service.Logger.Logger')
+        }
+    )
 
     setmetatable(public, self)
     self.__index = self
