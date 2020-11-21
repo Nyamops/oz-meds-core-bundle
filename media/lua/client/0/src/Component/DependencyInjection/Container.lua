@@ -25,16 +25,19 @@ function Container:new()
             return nil
         end
 
+        local newObject = classObject:new(unpack(arguments))
+        newObject.__metatable = className
+
         private.services[className] = Service:new {
             className = className,
-            instance = classObject:new(unpack(arguments)),
+            instance = setmetatable({}, newObject),
         }
 
         if tag ~= nil then
             if private.taggedServices[tag] == nil then
                 private.taggedServices[tag] = {}
             end
-            private.taggedServices[tag][className] = private.services[className]
+            private.taggedServices[tag][className] = private.services[className].instance
         end
     end
 
@@ -57,7 +60,7 @@ function Container:new()
             return {}
         end
 
-        return private.services[tag].instance
+        return private.taggedServices[tag]
     end
 
     ---Check for already registered class

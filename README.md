@@ -107,14 +107,12 @@ Events.OnGameStart.Add(
             function(data)
                 local o = {}
                 function o:doDrawItem(y, item, alt)
-                    print('TESTTESTTEST======================')
+                    --...
                 end
                 --unpack table to methods arguments
                 return o.doDrawItem(unpack(data))
             end
         )
-        var_dump(Container, eventListener)
-        var_dump(Container:get('OzMedsCoreBundle.Service.Logger.Logger'), Container:get('OzMedsCoreBundle.Service.EventManager.EventManager'))
 
         Container:get('OzMedsCoreBundle.Service.EventManager.EventManager'):subscribe(
             'ISHealthPanel.doDrawItem', --your event alias
